@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .pokemon-border-radius {
+    border-radius: 61% 39% 29% 71% / 51% 37% 63% 49%;
+  }
+}

@@ -3,7 +3,7 @@ import { useApiContext } from "../context/ApiContext";
 
 const Pagination = () => {
   const { state, dispatch } = useApiContext();
-  const { data, itemsPerPage } = state;
+  const { data, itemsPerPage, currentPage } = state;
   let totalPages = [...Array(Math.ceil(data?.length / itemsPerPage))];
 
   const [activePage, setActivePage] = useState(1);
@@ -12,7 +12,18 @@ const Pagination = () => {
     <div>
       <div className="flex justify-center my-5">
         <ul className="flex space-x-3">
-          <li className="cursor-pointer px-3 py-1 text-sm font-semibold bg-pink-400 rounded">
+          <li
+            onClick={() => {
+              if (currentPage > 1) {
+                dispatch({
+                  type: "SET_CURRENT_PAGE",
+                  payload: currentPage - 1,
+                });
+                setActivePage((prevStat) => prevStat - 1);
+              }
+            }}
+            className="cursor-pointer px-3 py-1 text-sm font-semibold bg-pink-400 rounded"
+          >
             prev
           </li>
           {totalPages.map((_, index) => (
@@ -32,7 +43,18 @@ const Pagination = () => {
               {index + 1}
             </li>
           ))}
-          <li className="cursor-pointer px-3 py-1 text-sm font-semibold bg-pink-400 rounded">
+          <li
+            onClick={() => {
+              if (currentPage < totalPages.length) {
+                dispatch({
+                  type: "SET_CURRENT_PAGE",
+                  payload: currentPage + 1,
+                });
+                setActivePage((prevStat) => prevStat + 1);
+              }
+            }}
+            className="cursor-pointer px-3 py-1 text-sm font-semibold bg-pink-400 rounded"
+          >
             next
           </li>
         </ul>
